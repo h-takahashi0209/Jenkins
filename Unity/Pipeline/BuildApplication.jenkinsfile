@@ -1,0 +1,43 @@
+def methodName = "";
+def appExt = "";
+
+pipeline {
+    agent any
+    parameters {
+        string(name: 'PROJECT_NAME', defaultValue: '', description: "プロジェクト名")
+        string(name: 'PLATFORM', defaultValue: '', description: "プラットフォーム")
+    }
+    stages {
+        stage('Setup') {
+            steps {
+                script {
+                    if (params.PLATFORM == "Android")
+                    {
+                        methodName = "BuildAndroid"
+                        appExt = "apk"
+                    }
+                    else if (params.PLATFORM == "Android")
+                    {
+                        methodName = "BuildIOS"
+                        appExt = "ipa"
+                    }
+                    else if (params.PLATFORM == "Windows")
+                    {
+                        methodName = "BuildWindows"
+                        appExt = "exe"
+                    }
+                }
+            }
+        }
+        stage('BuildApplication') {
+            steps {
+                bat "D:\\Project/Private/Jenkins/Unity/Bat/BuildApplication.bat ${params.PROJECT_NAME} ${methodName}"
+            }
+        }
+        stage('UploadAppToDeployGate') {
+            steps {
+                bat "D:\\Project/Private/Jenkins/Unity/Bat/UploadAppToDeployGate.bat ${DEPLOY_GATE_TOKEN} ${params.PROJECT_NAME} ${appExt}"
+            }
+        }
+    }
+}
