@@ -4,6 +4,8 @@
 
 Unity プロジェクトの ROM ビルド、DeployGate への成果物のアップロードを行う
 
+![](https://user-images.githubusercontent.com/93642791/144876209-70789909-0922-4023-a80d-ce71a1f49ce8.PNG)
+
 ## 詳細
 
 - プロジェクト名、プラットフォーム名を引数に受け取って処理を分岐させている
